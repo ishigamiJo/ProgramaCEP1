@@ -1,7 +1,11 @@
+package br.com.Breno.Projects.principal;
+
+import br.com.Breno.Projects.modelos.CEP;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -16,7 +20,7 @@ public class API {
     private final String end ="/json/";
 
 
-    public void RequisicaoCEP() {
+    public void RequisicaoCEP() throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting()
                 .create();
         Scanner scanner = new Scanner(System.in);
@@ -52,15 +56,18 @@ public class API {
                 System.out.println(cep);
                  listaDeCEP.add(cep);
             } catch (IOException e) {
-                throw new RuntimeException("Não consegui obter o CEP a partir deste endereço");
+                throw new RuntimeException("Não consegui obter o br.com.Breno.Projects.modelos.CEP a partir deste endereço");
             } catch (InterruptedException e) {
-                throw new RuntimeException("Não consegui obter o CEP a partir deste endereço");
+                throw new RuntimeException("Não consegui obter o br.com.Breno.Projects.modelos.CEP a partir deste endereço");
             } catch (JsonSyntaxException e) {
                 throw new RuntimeException("Erro, CPF sem a quantidade correta de números");
             }
 
 
         }
+        FileWriter arquivo = new FileWriter("CEPs.json");
+        arquivo.write(gson.toJson(listaDeCEP));
+        arquivo.close();
 
 
     }
